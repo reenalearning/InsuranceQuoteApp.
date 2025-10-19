@@ -1,0 +1,49 @@
+<form (ngSubmit)="submitQuote()">
+  <label>Term:</label>
+  <input type="number" [(ngModel)]="term" name="term" required />
+
+  <label>Sum Insured:</label>
+  <input type="number" [(ngModel)]="sumInsured" name="sumInsured" required />
+
+  <label>Age:</label>
+  <input type="number" [(ngModel)]="age" name="age" required />
+
+  <label>Coverage Type:</label>
+  <input type="text" [(ngModel)]="coverageType" name="coverageType" required />
+
+  <label>Risk Factor:</label>
+  <select [(ngModel)]="riskFactor" name="riskFactor" required>
+    <option value="">Select</option>
+    <option value="Low">Low</option>
+    <option value="Medium">Medium</option>
+    <option value="High">High</option>
+  </select>
+
+  <button type="submit" [disabled]="loading">Get Quote</button>
+</form>
+
+<div *ngIf="errorMessage" style="color:red; margin-top:10px;">
+  {{ errorMessage }}
+</div>
+
+<div *ngIf="quoteResult" style="margin-top:20px;">
+  <h3>Quote Result</h3>
+  <p><strong>Quote ID:</strong> {{ quoteResult.quoteId }}</p>
+  <p><strong>Term:</strong> {{ quoteResult.Term }}</p>
+  <p><strong>Sum Insured:</strong> {{ quoteResult.SumInsured }}</p>
+  <p><strong>Age:</strong> {{ quoteResult.Age }}</p>
+  <p><strong>Coverage Type:</strong> {{ quoteResult.CoverageType }}</p>
+  <p><strong>Risk Factor:</strong> {{ quoteResult.RiskFactor }}</p>
+
+  <div *ngIf="quoteResult.Premiums">
+    <h4>Premiums:</h4>
+    <ul>
+      <li *ngFor="let key of quoteResultPremiumKeys()">
+        {{ key }}: {{ quoteResult.Premiums[key] | currency }}
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+
